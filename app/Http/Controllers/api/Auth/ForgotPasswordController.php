@@ -1,15 +1,11 @@
 <?php
-
-namespace App\Http\Controllers\Auth;
-
+namespace App\Http\Controllers\Api\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\ResetsPasswords;
-
-class ResetPasswordController extends Controller
+use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+class ForgotPasswordController extends Controller
 {
-    use ResetsPasswords;
-
+    use SendsPasswordResetEmails;
     /**
      * Create a new controller instance.
      *
@@ -19,26 +15,24 @@ class ResetPasswordController extends Controller
     {
         $this->middleware('guest');
     }
-
     /**
-     * Get the response for a successful password reset.
+     * Get the response for a successful password reset link.
      *
      * @param  string  $response
      * @return \Illuminate\Http\RedirectResponse
      */
-    protected function sendResetResponse($response)
+    protected function sendResetLinkResponse($response)
     {
         return ['status' => trans($response)];
     }
-
     /**
-     * Get the response for a failed password reset.
+     * Get the response for a failed password reset link.
      *
      * @param  \Illuminate\Http\Request $request
      * @param  string  $response
      * @return \Illuminate\Http\RedirectResponse
      */
-    protected function sendResetFailedResponse(Request $request, $response)
+    protected function sendResetLinkFailedResponse(Request $request, $response)
     {
         return response()->json(['email' => trans($response)], 400);
     }

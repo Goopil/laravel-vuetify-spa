@@ -1,17 +1,13 @@
 <?php
-
-namespace App\Http\Controllers\Auth;
-
+namespace App\Http\Controllers\Api\Auth;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
-
 class RegisterController extends Controller
 {
     use RegistersUsers;
-
     /**
      * Create a new controller instance.
      *
@@ -21,7 +17,6 @@ class RegisterController extends Controller
     {
         $this->middleware('guest');
     }
-
     /**
      * The user has been registered.
      *
@@ -33,7 +28,6 @@ class RegisterController extends Controller
     {
         return $user;
     }
-
     /**
      * Get a validator for an incoming registration request.
      *
@@ -48,7 +42,6 @@ class RegisterController extends Controller
             'password' => 'required|min:6|confirmed',
         ]);
     }
-
     /**
      * Create a new user instance after a valid registration.
      *
