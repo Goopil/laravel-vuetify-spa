@@ -6,8 +6,8 @@ import i18n from './vue-i18n'
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
 
 axios.interceptors.request.use(request => {
-  if (store.getters.authToken) {
-    request.headers.common['Authorization'] = `Bearer ${store.getters.authToken}`
+  if (store.getters['auth/token']) {
+    request.headers.common['Authorization'] = `Bearer ${store.getters['auth/token']}`
   }
   return request
 })
@@ -24,7 +24,7 @@ axios.interceptors.response.use(response => response, error => {
     })
   }
 
-  if (status === 401 && store.getters.authCheck) {
+  if (status === 401 && store.getters['auth/check']) {
     store.dispatch('responseMessage', {
       type: 'warning',
       text: i18n.t('token_expired_alert_text'),
@@ -32,7 +32,7 @@ axios.interceptors.response.use(response => response, error => {
       modal: true
     })
     .then(async () => {
-      await store.dispatch('logout')
+      await store.dispatch('auth/logout')
 
       router.push({ name: 'login' })
     })
