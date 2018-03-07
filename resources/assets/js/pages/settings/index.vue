@@ -1,9 +1,9 @@
 <template>
   <v-layout row>
-    <v-flex xs12 sm8 offset-sm2 lg4 offset-lg4>
+    <v-flex xs10 offset-xs1>
       <v-card>
         <progress-bar :show="busy"></progress-bar>
-        <v-card-title primary-title class="grey lighten-4">
+        <v-card-title primary-title>
           <h3 class="headline mb-0">{{ $t('settings') }}</h3>
         </v-card-title>
         <v-tabs icons centered fixed>
@@ -40,6 +40,7 @@ import Password from '~/pages/settings/password'
 
 export default {
   name: 'settings-view',
+  middleware: 'auth',
   components: {
     'profile-view': Profile,
     'password-view': Password

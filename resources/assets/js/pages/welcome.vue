@@ -46,13 +46,14 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'welcome-view',
   layout: 'default',
+  middleware: 'guest',
 
   metaInfo () {
     return { title: this.$t('home') }
   },
 
-  computed: mapGetters({
-    authenticated: 'authCheck'
+  computed: mapGetters('auth', {
+    authenticated: 'check'
   }),
 
   data: () => ({

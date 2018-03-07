@@ -41,7 +41,7 @@
               name="password_confirmation"
               v-validate="'required|confirmed:password'"
             ></password-input>
-            
+
           </v-card-text>
           <v-card-actions>
             <submit-button :flat="true" :form="form" :label="$t('reset_password')"></submit-button>
@@ -57,11 +57,12 @@ import Form from 'vform'
 
 export default {
   name: 'reset-view',
-  
+  middleware: 'guest',
+
   metaInfo () {
     return { title: this.$t('reset_password') }
   },
-  
+
   data: () => ({
     form: new Form({
       token: '',
@@ -84,13 +85,13 @@ export default {
       const { data } = await this.form.post('/api/login')
 
       // Save the token.
-      this.$store.dispatch('saveToken', {
+      this.$store.dispatch('auth/saveToken', {
         token: data.token,
         remember: false
       })
 
       // Fetch the user.
-      await this.$store.dispatch('fetchUser')
+      await this.$store.dispatch('auth/fetchUser')
 
       this.$store.dispatch('responseMessage', {
         type: 'success',

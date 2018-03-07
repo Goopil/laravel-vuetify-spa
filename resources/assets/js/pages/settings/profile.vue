@@ -48,9 +48,7 @@ export default {
     })
   }),
 
-  computed: mapGetters({
-    user: 'authUser'
-  }),
+  computed: mapGetters('auth', ['user']),
 
   created () {
     // Fill the form with user data.
@@ -67,7 +65,7 @@ export default {
 
       const { data } = await this.form.patch('/api/settings/profile')
 
-      await this.$store.dispatch('updateUser', { user: data })
+      await this.$store.dispatch('auth/updateUser', { user: data })
       this.$emit('busy', false)
 
       this.$store.dispatch('responseMessage', {

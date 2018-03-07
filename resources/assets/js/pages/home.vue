@@ -13,6 +13,7 @@
 <script>
 export default {
   name: 'home-view',
+  middleware: 'auth',
   metaInfo () {
     return { title: this.$t('home') }
   }

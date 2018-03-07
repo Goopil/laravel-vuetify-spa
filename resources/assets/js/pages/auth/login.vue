@@ -61,6 +61,7 @@ import Form from 'vform'
 
 export default {
   name: 'login-view',
+  middleware: 'guest',
   metaInfo () {
     return { title: this.$t('login') }
   },
@@ -83,13 +84,13 @@ export default {
       const { data } = await this.form.post('/api/login')
 
       // Save the token.
-      this.$store.dispatch('saveToken', {
+      this.$store.dispatch('auth/saveToken', {
         token: data.token,
         remember: this.remember
       })
 
       // Fetch the user.
-      await this.$store.dispatch('fetchUser')
+      await this.$store.dispatch('auth/fetchUser')
       this.busy = false
 
       // Redirect home.
