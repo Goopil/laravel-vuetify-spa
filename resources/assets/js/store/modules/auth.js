@@ -2,6 +2,8 @@ import axios from 'axios'
 import Cookies from 'js-cookie'
 import * as types from '../mutation-types'
 
+export const namespaced = true
+
 // state
 export const state = {
   user: null,
@@ -59,7 +61,8 @@ export const actions = {
   async logout ({ commit }) {
     try {
       await axios.post('/api/logout')
-    } catch (e) { }
+    } catch (e) {
+    }
 
     commit(types.LOGOUT)
   }
@@ -67,7 +70,7 @@ export const actions = {
 
 // getters
 export const getters = {
-  authUser: state => state.user,
-  authToken: state => state.token,
-  authCheck: state => state.user !== null
+  user: state => state.user,
+  token: state => state.token,
+  check: state => state.user !== null
 }
