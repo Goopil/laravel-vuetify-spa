@@ -9,3 +9,6 @@ export const UPDATE_USER = 'UPDATE_USER'
 // feedback.js
 export const RESPONSE_MSG = 'RESPONSE_MSG'
 export const CLEAR_MSG = 'CLEAR_MSG'
+
+// lang.js
+export const SET_LOCALE = 'SET_LOCALE'
