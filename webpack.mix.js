@@ -16,7 +16,9 @@ mix
     'vue-i18n',
     'vue-router',
     'vuex-router-sync',
-    'vuetify'
+    'vuetify',
+    'vform',
+    'vee-validate'
   ])
 
 mix.webpackConfig({
