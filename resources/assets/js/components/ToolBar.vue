@@ -71,11 +71,11 @@
         }
 
         // Log out the user.
-        await this.$store.dispatch('logout')
+        await this.$store.dispatch('auth/logout')
         this.busy = false
 
         // Redirect to login.
-        this.$router.push({ name: 'login' })
+        this.$router.push({ name: 'login', params: {lang: this.$store.getters.locale } })
       }
     }
   }
