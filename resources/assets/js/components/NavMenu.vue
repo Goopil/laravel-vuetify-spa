@@ -4,7 +4,7 @@
       <v-list-tile>
         <v-list-tile-content v-if="!mini"></v-list-tile-content>
         <v-list-tile-action>
-          <v-btn icon @click.native.stop="$emit('mini')">
+          <v-btn icon @click.prevent.stop="$emit('mini')">
             <v-icon>{{chevron}}</v-icon>
           </v-btn>
         </v-list-tile-action>
@@ -19,6 +19,7 @@
         v-for="(item, i) in items"
         :key="i"
         :to="{name: item.name, params: {lang: $store.getters.locale}}"
+        @click.prevent.stop
       >
         <v-list-tile-action>
           <v-icon light v-html="item.icon"></v-icon>
