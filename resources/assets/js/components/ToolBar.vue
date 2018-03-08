@@ -3,7 +3,7 @@
   <v-toolbar fixed app clipped-left>
     <v-toolbar-side-icon @click.stop="toggleDrawer" v-if="authenticated"></v-toolbar-side-icon>
     <v-toolbar-title>
-      <router-link :to="{ name: 'welcome' }" class="white--text">
+      <router-link :to="{ name: 'welcome', params: {lang: $store.getters.locale} }">
         {{ appName }}
       </router-link>
     </v-toolbar-title>
@@ -24,13 +24,13 @@
     <template v-if="authenticated">
       <progress-bar :show="busy"></progress-bar>
       <v-btn flat :to="{ name: 'settings.profile', params: {lang: $store.getters.locale} }">{{ user.name }}</v-btn>
-      <v-btn flat @click.prevent="logout">{{ $t('logout') }}</v-btn>
+      <v-btn flat @click.prevent="logout">{{ $t('common.logout') }}</v-btn>
     </template>
 
     <!-- Guest -->
     <template v-else>
-      <v-btn flat :to="{ name: 'login', params: {lang: $store.getters.locale}  }">{{ $t('login') }}</v-btn>
-      <v-btn flat :to="{ name: 'register', params: {lang: $store.getters.locale}  }">{{ $t('register') }}</v-btn>
+      <v-btn flat :to="{ name: 'login', params: {lang: $store.getters.locale}  }">{{ $t('common.login') }}</v-btn>
+      <v-btn flat :to="{ name: 'register', params: {lang: $store.getters.locale}  }">{{ $t('common.register') }}</v-btn>
     </template>
   </v-toolbar>
 </template>

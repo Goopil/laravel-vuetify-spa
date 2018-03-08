@@ -1,5 +1,5 @@
 <template>
-  <v-app toolbar dark>
+  <v-app toolbar>
     <v-navigation-drawer
       v-if="authenticated"
       clipped

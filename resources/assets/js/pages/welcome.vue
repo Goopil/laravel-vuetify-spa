@@ -4,10 +4,10 @@
       <v-spacer></v-spacer>
       <!-- <v-toolbar-side-icon class="hidden-md-and-up"></v-toolbar-side-icon> -->
       <v-toolbar-items>
-        <v-btn flat v-if="authenticated" :to="{ name: 'home' }">{{ $t('home') }}</v-btn>
+        <v-btn flat v-if="authenticated" :to="{ name: 'home' }">{{ $t('common.home') }}</v-btn>
         <template v-else>
-          <v-btn flat :to="{ name: 'login' }">{{ $t('login') }}</v-btn>
-          <v-btn flat :to="{ name: 'register' }">{{ $t('register') }}</v-btn>
+          <v-btn flat :to="{ name: 'login' }">{{ $t('common.login') }}</v-btn>
+          <v-btn flat :to="{ name: 'register' }">{{ $t('common.register') }}</v-btn>
         </template>
       </v-toolbar-items>
     </v-toolbar>
@@ -49,7 +49,7 @@ export default {
   middleware: 'guest',
 
   metaInfo () {
-    return { title: this.$t('home') }
+    return { title: this.$t('common.home') }
   },
 
   computed: mapGetters('auth', {
@@ -57,7 +57,6 @@ export default {
   }),
 
   data: () => ({
-    title: window.config.appName
   })
 }
 </script>

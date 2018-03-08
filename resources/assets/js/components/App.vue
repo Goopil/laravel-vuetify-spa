@@ -28,15 +28,6 @@ export default {
     'v-loading': Loading
   },
 
-  metaInfo () {
-    const { appName } = window.config
-
-    return {
-      title: appName,
-      titleTemplate: `%s · ${appName}`
-    }
-  },
-
   data: () => ({
     layout: null,
     defaultLayout: 'app'

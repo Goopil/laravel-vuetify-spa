@@ -2,7 +2,7 @@
   <v-card flat>
     <form @submit.prevent="update" @keydown="form.onKeydown($event)">
       <v-card-title primary-title>
-        <h5 class="subheading mb-0">{{ $t('your_info') }}</h5>
+        <h5 class="subheading mb-0">{{ $t('common.your_info') }}</h5>
       </v-card-title>
       <v-card-text>
 
@@ -70,7 +70,7 @@ export default {
 
       this.$store.dispatch('responseMessage', {
         type: 'success',
-        text: this.$t('info_updated')
+        text: this.$t('common.info_updated')
       })
     }
   }

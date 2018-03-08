@@ -32,7 +32,7 @@ export default {
     },
     label: {
       type: String,
-      default: i18n.t('password')
+      default: i18n.t('common.password')
     },
     hideIcon: {
       type: [Boolean, String],

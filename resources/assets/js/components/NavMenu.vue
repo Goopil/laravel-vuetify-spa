@@ -9,10 +9,10 @@
           </v-btn>
         </v-list-tile-action>
       </v-list-tile>
-
-
     </v-list>
+
     <v-divider></v-divider>
+
     <v-list>
       <v-list-tile
         value="true"
@@ -42,7 +42,7 @@
     },
     data () {
       return {
-        name: this.$t('nav_menu_title'),
+        name: this.$t('common.nav_menu_title'),
         items: [
           { title: 'Dashboard', icon: 'dashboard', name: 'home' },
           { title: 'Account', icon: 'account_box', name: 'settings.profile' }

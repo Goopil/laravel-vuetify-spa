@@ -5,14 +5,14 @@
         <progress-bar :show="form.busy"></progress-bar>
         <form @submit.prevent="register" @keydown="form.onKeydown($event)">
           <v-card-title primary-title>
-            <h3 class="headline mb-0">{{ $t('register') }}</h3>
+            <h3 class="headline mb-0">{{ $t('common.register') }}</h3>
           </v-card-title>
           <v-card-text>
 
             <!-- Name -->
             <text-input
               :form="form"
-              :label="$t('name')"
+              :label="$t('common.name')"
               :v-errors="errors"
               :value.sync="form.name"
               counter="30"
@@ -23,7 +23,7 @@
             <!-- Email -->
             <email-input
               :form="form"
-              :label="$t('email')"
+              :label="$t('common.email')"
               :v-errors="errors"
               :value.sync="form.email"
               name="email"
@@ -33,7 +33,7 @@
             <!-- Password -->
             <password-input
               :form="form"
-              :hint="$t('password_length_hint')"
+              :hint="$t('common.password_length_hint')"
               :v-errors="errors"
               :value.sync="form.password"
               v-on:eye="eye = $event"
@@ -44,7 +44,7 @@
             <password-input
               :form="form"
               :hide="eye"
-              :label="$t('confirm_password')"
+              :label="$t('common.confirm_password')"
               :v-errors="errors"
               :value.sync="form.password_confirmation"
               data-vv-as="password"
@@ -56,7 +56,7 @@
           </v-card-text>
 
           <v-card-actions>
-            <submit-button :form="form" :label="$t('register')"></submit-button>
+            <submit-button :form="form" :label="$t('common.register')"></submit-button>
           </v-card-actions>
         </form>
       </v-card>
@@ -72,7 +72,7 @@ export default {
   name: 'register-view',
   middleware: 'guest',
   metaInfo () {
-    return { title: this.$t('register') }
+    return { title: this.$t('common.register') }
   },
 
   data: () => ({
@@ -102,7 +102,7 @@ export default {
       await this.$store.dispatch('updateUser', { user: data })
 
       // Redirect home.
-      this.$router.push({ name: 'home' })
+      this.$router.push({ name: 'home', params: {lang: this.$store.locale} })
     }
   }
 }
