@@ -8,48 +8,58 @@
 </template>
 
 <script>
-import Loading from './Loading'
+  import Loading from './Loading'
+  import {mapGetters} from 'vuex'
 
-// Load layout components dynamically.
-const requireContext = require.context('../layouts', false, /.*\.vue$/)
+  // Load layout components dynamically.
+  const requireContext = require.context('../layouts', false, /.*\.vue$/)
 
-const layouts = requireContext.keys()
-  .map(file =>
-    [file.replace(/(^.\/)|(\.vue$)/g, ''), requireContext(file)]
-  )
-  .reduce((components, [name, component]) => {
-    components[name] = component
-    return components
-  }, {})
+  const layouts = requireContext.keys()
+    .map(file =>
+      [file.replace(/(^.\/)|(\.vue$)/g, ''), requireContext(file)]
+    )
+    .reduce((components, [name, component]) => {
+      components[name] = component
+      return components
+    }, {})
 
-export default {
+  export default {
 
-  components: {
-    'v-loading': Loading
-  },
+    components: {
+      'v-loading': Loading
+    },
 
-  data: () => ({
-    layout: null,
-    defaultLayout: 'app'
-  }),
+    computed: mapGetters(['locale']),
 
-  mounted () {
-    this.$loading = this.$refs.loading
-  },
+    data: () => ({
+      layout: null,
+      defaultLayout: 'app'
+    }),
 
-  methods: {
-    /**
-     * Set the application layout.
-     *
-     * @param {String} layout
-     */
-    setLayout (layout) {
-      if (!layout || !layouts[layout]) {
-        layout = this.defaultLayout
+    created () {
+      this.$validator.localize(this.locale)
+      this.$store.watch(state => state.lang.locale, () => {
+          this.$validator.localize(this.locale)
+      })
+    },
+
+    mounted () {
+      this.$loading = this.$refs.loading
+    },
+
+    methods: {
+      /**
+       * Set the application layout.
+       *
+       * @param {String} layout
+       */
+      setLayout (layout) {
+        if (!layout || !layouts[layout]) {
+          layout = this.defaultLayout
+        }
+
+        this.layout = layouts[layout]
       }
-
-      this.layout = layouts[layout]
     }
   }
-}
 </script>
