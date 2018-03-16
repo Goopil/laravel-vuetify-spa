@@ -7,7 +7,7 @@ mix
   .stylus('resources/assets/stylus/app.styl', 'public/css')
   .sourceMaps()
   .disableNotifications()
-  // .copyDirectory('resources/assets/img', 'public/img')
+  .copyDirectory('resources/assets/img', 'public/img')
   .version()
   .extract([
     'vue',
@@ -18,7 +18,10 @@ mix
     'vuex-router-sync',
     'vuetify',
     'vform',
-    'vee-validate'
+    'js-cookie',
+    'vee-validate',
+    'vee-validate/dist/locale/fr.js',
+    'vee-validate/dist/locale/en.js'
   ])
 
 mix.webpackConfig({
