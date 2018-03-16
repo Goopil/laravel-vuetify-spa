@@ -13,7 +13,6 @@
     <tool-bar v-on:toggleDrawer="drawer = !drawer" :drawer="drawer"></tool-bar>
     <v-content>
       <v-container fluid>
-        <h1>layout app</h1>
         <transition name="page" mode="out-in">
           <router-view></router-view>
         </transition>
