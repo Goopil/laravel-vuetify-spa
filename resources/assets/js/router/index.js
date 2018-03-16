@@ -43,10 +43,11 @@ function createRouter () {
       {
         path: '*',
         redirect: to => {
-          // todo add language detection and session store selected language
+          const browserLang = window.navigator.language || navigator.language || navigator.userLanguage
+          const lang = store.getters.locales.includes(browserLang) ? browserLang : store.getters.defaultLocale
           return {
             name: 'home',
-            params: { lang: 'en' }
+            params: {lang}
           }
         }
       }
@@ -76,7 +77,8 @@ async function beforeEach (to, from, next) {
     return next()
   }
 
-  const [component] = components
+  let component = components.find(c => c.layout !== undefined)
+  component = component || components[0]
 
   if (component) {
     router.app.$nextTick(() => {
