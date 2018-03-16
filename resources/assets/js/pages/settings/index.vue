@@ -1,54 +1,68 @@
 <template>
-  <v-layout row>
-    <v-flex xs10 offset-xs1>
-      <v-card>
-        <progress-bar :show="busy"></progress-bar>
-        <v-card-title primary-title>
-          <h3 class="headline mb-0">{{ $t('settings') }}</h3>
-        </v-card-title>
-        <v-tabs icons centered fixed>
-          <v-tabs-bar class="grey lighten-4">
-            <v-tabs-slider color="primary"></v-tabs-slider>
-            <v-tabs-item href="#tab-person">
-              <v-icon>person</v-icon>
-              {{ $t('profile') }}
-            </v-tabs-item>
-            <v-tabs-item href="#tab-password">
-              <v-icon>lock</v-icon>
-              {{ $t('password') }}
-            </v-tabs-item>
-          </v-tabs-bar>
-          <v-divider></v-divider>
+  <v-container grid-list-md text-xs-center>
+    <v-layout wrap row>
+      <v-flex lg3 sm4 xs12>
+        <v-card>
+          <v-list dense>
+            <v-subheader>{{$t('common.settings')}}</v-subheader>
+            <v-list-tile
+              avatar v-for="component in components"
+              :key="component.title"
+              @click="current = component.component"
+              :color="isCurrent(component.component)"
+            >
+              <v-list-tile-content>
+                <v-list-tile-title>{{$t(component.title)}}</v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
+          </v-list>
+        </v-card>
+      </v-flex>
 
-          <v-tabs-items>
-            <v-tabs-content id="tab-person">
-              <profile-view v-on:busy="busy = $event"></profile-view>
-            </v-tabs-content>
-            <v-tabs-content id="tab-password">
-              <password-view v-on:busy="busy = $event"></password-view>
-            </v-tabs-content>
-          </v-tabs-items>
-        </v-tabs>
-      </v-card>
-    </v-flex>
-  </v-layout>
+      <v-flex lg9 sm8 xs12>
+        <v-card>
+          <component :is="current" v-on:busy="busy = $event"></component>
+        </v-card>
+      </v-flex>
+
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
-import Profile from '~/pages/settings/profile'
-import Password from '~/pages/settings/password'
+  import Profile from '~/pages/settings/profile'
+  import Password from '~/pages/settings/password'
 
-export default {
-  name: 'settings-view',
-  middleware: 'auth',
-  components: {
-    'profile-view': Profile,
-    'password-view': Password
-  },
-  data () {
-    return {
-      busy: false
+  export default {
+    name: 'settings-view',
+    middleware: 'auth',
+    components: {
+      'profile-view': Profile,
+      'password-view': Password
+    },
+    beforeMount () {
+      this.current = this.components[0].component
+    },
+    methods: {
+      isCurrent(comp) {
+        return comp === this.current ? 'primary': ''
+      }
+    },
+    data () {
+      return {
+        components: [
+          {
+            title: 'common.profile',
+            component: 'profile-view'
+          },
+          {
+            title: 'common.password',
+            component: 'password-view'
+          }
+        ],
+        current: null,
+        busy: false
+      }
     }
   }
-}
 </script>
