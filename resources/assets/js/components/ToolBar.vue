@@ -19,12 +19,24 @@
       </v-list>
     </v-menu>
 
-
     <!-- Authenticated -->
     <template v-if="authenticated">
       <progress-bar :show="busy"></progress-bar>
-      <v-btn flat :to="{ name: 'settings.profile', params: {lang: $store.getters.locale} }">{{ user.name }}</v-btn>
-      <v-btn flat @click.prevent="logout">{{ $t('common.logout') }}</v-btn>
+      <v-menu :nudge-width="150" class="mr-3 ml-1">
+        <v-toolbar-title slot="activator">
+          <v-icon>more_vert</v-icon>
+        </v-toolbar-title>
+        <v-list>
+
+          <v-list-tile :to="{ name: 'settings.profile', params: {lang: $store.getters.locale} }">
+            <v-list-tile-title>{{$t('common.settings')}}</v-list-tile-title>
+          </v-list-tile>
+          <v-list-tile @click.prevent="logout">
+            <v-list-tile-title>{{ $t('common.logout') }}</v-list-tile-title>
+          </v-list-tile>
+
+        </v-list>
+      </v-menu>
     </template>
 
     <!-- Guest -->
@@ -53,7 +65,6 @@
 
     computed: {
       ...mapGetters('auth', {
-        user: 'user',
         authenticated: 'check'
       }),
       ...mapGetters(['locales'])
@@ -75,7 +86,7 @@
         this.busy = false
 
         // Redirect to login.
-        this.$router.push({ name: 'login', params: {lang: this.$store.getters.locale } })
+        this.$router.push({ name: 'login', params: { lang: this.$store.getters.locale } })
       }
     }
   }
