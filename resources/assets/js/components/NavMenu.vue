@@ -37,7 +37,7 @@
     props: ['mini'],
     computed: {
       chevron () {
-        return this.mini ? 'chevron_right': 'chevron_left'
+        return this.mini ? 'chevron_right' : 'chevron_left'
       }
     },
     data () {

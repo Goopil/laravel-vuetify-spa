@@ -44,8 +44,8 @@
       this.current = this.components[0].component
     },
     methods: {
-      isCurrent(comp) {
-        return comp === this.current ? 'primary': ''
+      isCurrent (comp) {
+        return comp === this.current ? 'primary' : ''
       }
     },
     data () {

@@ -1,7 +1,4 @@
-// import {routes as userRoutes } from '~/modules/users'
-
 const modules = require.context('~/modules', true, /routes\.js$/)
-console.log(modules.keys())
 const mapModule = requireContext => {
   return requireContext.keys()
     .reduce((routes, file) => ([

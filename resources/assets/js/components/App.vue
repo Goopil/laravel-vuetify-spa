@@ -39,7 +39,7 @@
     created () {
       this.$validator.localize(this.locale)
       this.$store.watch(state => state.lang.locale, () => {
-          this.$validator.localize(this.locale)
+        this.$validator.localize(this.locale)
       })
     },
 

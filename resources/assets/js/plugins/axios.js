@@ -31,11 +31,11 @@ axios.interceptors.response.use(response => response, error => {
       title: i18n.t('token_expired_alert_title'),
       modal: true
     })
-    .then(async () => {
-      await store.dispatch('auth/logout')
+      .then(async () => {
+        await store.dispatch('auth/logout')
 
-      router.push({ name: 'login' })
-    })
+        router.push({ name: 'login' })
+      })
   }
 
   return Promise.reject(error)

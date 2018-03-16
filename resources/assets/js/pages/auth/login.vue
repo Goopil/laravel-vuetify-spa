@@ -97,11 +97,9 @@
 
           // Redirect home.
           this.$router.push({ name: 'home', params: { lang: this.$store.getters.locale } })
-
         } catch (err) {
           this.busy = false
         }
-
       }
     }
   }

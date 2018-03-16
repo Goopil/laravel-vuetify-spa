@@ -41,7 +41,7 @@ export default {
     'page-footer': PageFooter
   },
 
-  computed: mapGetters('auth',{
+  computed: mapGetters('auth', {
     authenticated: 'check'
   }),
 

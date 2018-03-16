@@ -55,7 +55,7 @@
         { text: 'Id', value: 'id', align: 'left' },
         { text: 'Name', value: 'name' },
         { text: 'Email', value: 'email' },
-        { text: 'Action', value: 'action', align: 'right' },
+        { text: 'Action', value: 'action', align: 'right' }
       ]
     })
   }
