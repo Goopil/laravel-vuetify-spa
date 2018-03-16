@@ -1,4 +1,16 @@
-export default [
+// import {routes as userRoutes } from '~/modules/users'
+
+const modules = require.context('~/modules', true, /routes\.js$/)
+console.log(modules.keys())
+const mapModule = requireContext => {
+  return requireContext.keys()
+    .reduce((routes, file) => ([
+      ...routes,
+      requireContext(file).default
+    ]), [])
+}
+
+const routes = [
   { path: '', name: 'welcome', component: require('~/pages/welcome.vue') },
 
   { path: 'home', name: 'home', component: require('~/pages/home.vue') },
@@ -37,21 +49,7 @@ export default [
     name: 'password.reset',
     component: () => import(/* webpackChunkName: "auth" */  '~/pages/auth/password/reset.vue')
   },
-  {
-    path: 'admin/users',
-    component: () => import(/* webpackChunkName: "admin.users" */ '~/pages/users/index.js'),
-    children: [
-      {
-        path: '',
-        name: 'admin.users',
-        // meta: { keepAlive: true },
-        component: () => import(/* webpackChunkName: "admin.users" */ '~/pages/users/list')
-      },
-      {
-        path: ':id',
-        name: 'admin.users.item',
-        component: () => import(/* webpackChunkName: "admin.users" */ '~/pages/users/item')
-      }
-    ]
-  }
+  ...mapModule(modules)
 ]
+
+export default routes
