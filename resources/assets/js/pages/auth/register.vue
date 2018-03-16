@@ -33,6 +33,7 @@
             <!-- Password -->
             <password-input
               :form="form"
+              :label="$t('common.password')"
               :hint="$t('common.password_length_hint')"
               :v-errors="errors"
               :value.sync="form.password"

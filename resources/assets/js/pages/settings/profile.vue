@@ -9,7 +9,7 @@
         <!-- Name -->
         <text-input
           :form="form"
-          :label="$t('name')"
+          :label="$t('common.name')"
           :v-errors="errors"
           :value.sync="form.name"
           counter="30"
@@ -20,7 +20,7 @@
         <!-- Email -->
         <email-input
           :form="form"
-          :label="$t('email')"
+          :label="$t('common.email')"
           :v-errors="errors"
           :value.sync="form.email"
           name="email"
@@ -29,7 +29,7 @@
 
       </v-card-text>
       <v-card-actions>
-        <submit-button :flat="true" :form="form" :label="$t('update')"></submit-button>
+        <submit-button :flat="true" :form="form" :label="$t('common.update')"></submit-button>
       </v-card-actions>
     </form>
   </v-card>
