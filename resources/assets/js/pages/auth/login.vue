@@ -24,6 +24,7 @@
             <password-input
               :v-errors="errors"
               :form="form"
+              :label="$t('common.password')"
               :value.sync="form.password"
               prepend="lock_outline"
               v-validate="'required|min:8'"
@@ -81,20 +82,26 @@
         this.busy = true
 
         // Submit the form.
-        const { data } = await this.form.post('/api/login')
+        try {
+          const { data } = await this.form.post('/api/login')
 
-        // Save the token.
-        this.$store.dispatch('auth/saveToken', {
-          token: data.token,
-          remember: this.remember
-        })
+          // Save the token.
+          this.$store.dispatch('auth/saveToken', {
+            token: data.token,
+            remember: this.remember
+          })
 
-        // Fetch the user.
-        await this.$store.dispatch('auth/fetchUser')
-        this.busy = false
+          // Fetch the user.
+          await this.$store.dispatch('auth/fetchUser')
+          this.busy = false
 
-        // Redirect home.
-        this.$router.push({ name: 'home', params: { lang: this.$store.getters.locale } })
+          // Redirect home.
+          this.$router.push({ name: 'home', params: { lang: this.$store.getters.locale } })
+
+        } catch (err) {
+          this.busy = false
+        }
+
       }
     }
   }
