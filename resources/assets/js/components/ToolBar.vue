@@ -22,8 +22,8 @@
     <!-- Authenticated -->
     <template v-if="authenticated">
       <progress-bar :show="busy"></progress-bar>
-      <v-menu :nudge-width="150" class="mr-3 ml-1">
-        <v-toolbar-title slot="activator" id="user-menu">
+      <v-menu :nudge-width="150" class="mr-3 ml-1" id="user-menu">
+        <v-toolbar-title slot="activator">
           <v-icon>more_vert</v-icon>
         </v-toolbar-title>
         <v-list>
