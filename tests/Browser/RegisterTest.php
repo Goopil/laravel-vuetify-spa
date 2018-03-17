@@ -3,8 +3,8 @@
 namespace Tests\Browser;
 
 use App\User;
-use Tests\Browser\Pages\Login;
 use Tests\DuskTestCase;
+use Tests\Browser\Pages\Login;
 use Tests\Browser\Pages\Register;
 
 class RegisterTest extends DuskTestCase
