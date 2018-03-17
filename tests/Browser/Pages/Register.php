@@ -11,7 +11,7 @@ class Register extends Page
      */
     public function url()
     {
-        return '/register';
+        return '/en/register';
     }
 
     /**
@@ -27,7 +27,8 @@ class Register extends Page
             $browser->type($key, $value);
         }
 
-        $browser->press('Register')
+        $browser
+            ->click('div.card__text > button')
             ->pause(500);
     }
 }

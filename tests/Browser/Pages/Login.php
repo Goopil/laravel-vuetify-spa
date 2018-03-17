@@ -11,7 +11,7 @@ class Login extends Page
      */
     public function url()
     {
-        return '/login';
+        return '/en/login';
     }
 
     /**
@@ -26,7 +26,7 @@ class Login extends Page
     {
         $browser->type('email', $email)
                 ->type('password', $password)
-                ->press('Log In')
+                ->click('div.card__text > button')
                 ->pause(350);
     }
 }
