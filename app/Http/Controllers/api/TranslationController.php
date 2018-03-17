@@ -34,13 +34,16 @@ class TranslationController extends Controller
 
     /**
      * @param $id
-     * @return \Illuminate\Http\JsonResponse
+     *
      * @throws \Exception
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($id)
     {
         $translation = $this->getOrfail($id);
         $translation->delete();
+
         return response()->json(true);
     }
 

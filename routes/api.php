@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +15,7 @@ use Illuminate\Http\Request;
 Route::get('translations/locale/{lang}', 'TranslationController@showPerLang');
 
 Route::group([
-    'middleware' => 'auth:api'
+    'middleware' => 'auth:api',
 ], function () {
     Route::post('logout', 'Auth\LoginController@logout');
     Route::get('user', 'Auth\LoginController@user');
@@ -29,7 +28,7 @@ Route::group([
 });
 
 Route::group([
-    'middleware' => 'guest:api'
+    'middleware' => 'guest:api',
 ], function () {
     Route::post('login', 'Auth\LoginController@login');
     Route::post('register', 'Auth\RegisterController@register');
@@ -39,4 +38,3 @@ Route::group([
     Route::post('oauth/{driver}', 'Auth\OAuthController@redirectToProvider');
     Route::get('oauth/{driver}/callback', 'Auth\OAuthController@handleProviderCallback')->name('oauth.callback');
 });
-
