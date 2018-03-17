@@ -23,7 +23,7 @@ class Home extends Page
      */
     public function clickLogout($browser)
     {
-        $browser->clickLink('Logout')
+        $browser->click('#logout')
             ->pause(300);
     }
 }

@@ -24,8 +24,8 @@ class RegisterTest extends DuskTestCase
                 ->submit([
                     'name'                  => 'Test User',
                     'email'                 => 'test@test.app',
-                    'password'              => 'secret',
-                    'password_confirmation' => 'secret',
+                    'password'              => 'test12345',
+                    'password_confirmation' => 'test12345',
                 ])
                 ->assertPageIs(Home::class);
         });
@@ -41,8 +41,8 @@ class RegisterTest extends DuskTestCase
                 ->submit([
                     'name'                  => 'Test User',
                     'email'                 => $user->email,
-                    'password'              => 'secret',
-                    'password_confirmation' => 'secret',
+                    'password'              => 'test12345',
+                    'password_confirmation' => 'test12345',
                 ])
                 ->assertSee('The email has already been taken.');
         });
