@@ -2,7 +2,7 @@
 
 > A Laravel-Vue FullStack SPA starter project template with Vuetify frontend. 
 
-Forked from https://github.com/cretueusebiu/laravel-vue-spa
+Forked from [https://github.com/elcobvg/laravel-vuetify-spa](https://github.com/elcobvg/laravel-vuetify-spa)
 
 ## Features
 
@@ -14,7 +14,7 @@ Forked from https://github.com/cretueusebiu/laravel-vue-spa
 - Integration with [vform](https://github.com/cretueusebiu/vform)
 - Authentication with [JWT](https://github.com/tymondesigns/jwt-auth)
 - Webpack with [laravel-mix](https://github.com/JeffreyWay/laravel-mix)
-- i18n with [vue-i18n](#) with localization stored in db with [spatie/laravel-translation-loader] (#)
+- i18n with [vue-i18n](https://github.com/kazupon/vue-i18n) with localization stored in db with [spatie/laravel-translation-loader] (https://github.com/spatie/laravel-translation-loader)
 
 ## Installation
 
