@@ -2,13 +2,27 @@
 
 namespace App;
 
+use App\Observers\DefaultRoleOnUserCreation;
+use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+/**
+ * Class User
+ * @package App
+ * @mixin \Eloquent
+ */
 class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
+    use HasRoles;
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::observe(DefaultRoleOnUserCreation::class);
+    }
 
     /**
      * The attributes that are mass assignable.
