@@ -21,7 +21,7 @@ class LocaleInSegments
     {
         $locale = trim($request->segment(1));
 
-        if (!in_array($locale, config('app.locales'), true)) {
+        if (! in_array($locale, config('app.locales'), true)) {
             $locale = config('app.defaultLocale');
         }
 
