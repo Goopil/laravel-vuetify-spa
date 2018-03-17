@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
-use App\User;
+use App\Http\Resources\AuthResource;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -33,9 +33,8 @@ class LoginController extends Controller
     /**
      * Send the response after the user was authenticated.
      *
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     protected function sendLoginResponse(Request $request)
     {
@@ -43,33 +42,29 @@ class LoginController extends Controller
         $token = (string) $this->guard()->getToken();
         $expiration = $this->guard()->getPayload()->get('exp');
 
-        return [
+        return response()->json([
             'token'      => $token,
             'token_type' => 'bearer',
             'expires_in' => $expiration - time(),
-        ];
+        ]);
     }
 
     /**
      * Log the user out of the application.
-     *
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function logout(Request $request)
+    public function logout()
     {
         $this->guard()->logout();
     }
 
+    /**
+     * get auth user with rbac names loaded
+     *
+     * @param Request $r
+     * @return AuthResource
+     */
     public function user(Request $r)
     {
-        /**
-         * @var User
-         */
-        $user = $r->user();
-//        $user->load(['permissions', 'roles']);
-
-        return $user;
+        return new AuthResource($r->user());
     }
 }
