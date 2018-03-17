@@ -12,8 +12,8 @@ class RegisterTest extends TestCase
         $this->postJson('/api/register', [
             'name' => 'Test User',
             'email' => 'test@test.app',
-            'password' => 'secret',
-            'password_confirmation' => 'secret',
+            'password' => 'secret12345',
+            'password_confirmation' => 'secret12345',
         ])
         ->assertSuccessful()
         ->assertJsonStructure(['id', 'name', 'email']);
