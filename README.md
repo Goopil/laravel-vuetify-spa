@@ -1,3 +1,8 @@
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Goopil/laravel-vuetify-spa/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Goopil/laravel-vuetify-spa/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/Goopil/laravel-vuetify-spa/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Goopil/laravel-vuetify-spa/?branch=master)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
+
 # Laravel-Vue i18n Fullstack SPA Starter
 
 > A Laravel-Vue FullStack SPA starter project template with Vuetify frontend. 
@@ -50,6 +55,4 @@ npm run production
 ## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
-
-[![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
 
