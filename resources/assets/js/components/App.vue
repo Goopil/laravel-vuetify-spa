@@ -9,7 +9,7 @@
 
 <script>
   import Loading from './Loading'
-  import {mapGetters} from 'vuex'
+  import { mapGetters } from 'vuex'
 
   // Load layout components dynamically.
   const requireContext = require.context('../layouts', false, /.*\.vue$/)

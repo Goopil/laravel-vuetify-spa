@@ -1,6 +1,5 @@
 import Cookies from 'js-cookie'
 import * as types from '../mutation-types'
-import Vue from 'vue'
 
 const { defaultLocale, locales } = window.config.i18n
 

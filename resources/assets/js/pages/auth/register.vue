@@ -67,44 +67,44 @@
 </template>
 
 <script>
-import Form from 'vform'
+  import Form from 'vform'
 
-export default {
-  name: 'register-view',
-  middleware: 'guest',
-  metaInfo () {
-    return { title: this.$t('common.register') }
-  },
+  export default {
+    name: 'register-view',
+    middleware: 'guest',
+    metaInfo () {
+      return { title: this.$t('common.register') }
+    },
 
-  data: () => ({
-    form: new Form({
-      name: '',
-      email: '',
-      password: '',
-      password_confirmation: ''
+    data: () => ({
+      form: new Form({
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: ''
+      }),
+      eye: true
     }),
-    eye: true
-  }),
 
-  methods: {
-    async register () {
-      if (await this.formHasErrors()) return
+    methods: {
+      async register () {
+        if (await this.formHasErrors()) return
 
-      // Register the user.
-      const { data } = await this.form.post('/api/register')
+        // Register the user.
+        const { data } = await this.form.post('/api/register')
 
-      // Log in the user.
-      const { data: { token }} = await this.form.post('/api/login')
+        // Log in the user.
+        const { data: { token } } = await this.form.post('/api/login')
 
-      // Save the token.
-      this.$store.dispatch('saveToken', { token })
+        // Save the token.
+        this.$store.dispatch('saveToken', { token })
 
-      // Update the user.
-      await this.$store.dispatch('updateUser', { user: data })
+        // Update the user.
+        await this.$store.dispatch('updateUser', { user: data })
 
-      // Redirect home.
-      this.$router.push({ name: 'home', params: {lang: this.$store.locale} })
+        // Redirect home.
+        this.$router.push({ name: 'home', params: { lang: this.$store.locale } })
+      }
     }
   }
-}
 </script>

@@ -47,7 +47,7 @@ function createRouter () {
           const lang = store.getters.locales.includes(browserLang) ? browserLang : store.getters.defaultLocale
           return {
             name: 'home',
-            params: {lang}
+            params: { lang }
           }
         }
       }
@@ -161,7 +161,7 @@ function callMiddleware (middleware, to, from, next) {
  */
 async function resolveComponents (components) {
   return Promise.all(components.map(async component => {
-    return typeof component === 'function' ? await component() : component
+    return typeof component === 'function' ? component() : component
   }))
 }
 
