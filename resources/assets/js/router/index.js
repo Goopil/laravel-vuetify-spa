@@ -1,16 +1,23 @@
 import Vue from 'vue'
 import store from '~/store'
-import Meta from 'vue-meta'
 import routes from './routes'
 import Router from 'vue-router'
 import { sync } from 'vuex-router-sync'
 
-Vue.use(Meta)
 Vue.use(Router)
 
-const router = make(
-  routes({ authGuard, guestGuard })
+// The middleware for every page of the application.
+const globalMiddleware = [
+  'locale',
+  'check-auth'
+]
+
+// Load middleware modules dynamically.
+const routeMiddleware = resolveMiddleware(
+  require.context('~/middlewares', false, /.*\.js$/)
 )
+
+const router = createRouter()
 
 sync(store, router)
 
@@ -19,47 +26,59 @@ export default router
 /**
  * Create a new router instance.
  *
- * @param  {Array} routes
  * @return {Router}
  */
-function make (routes) {
+function createRouter () {
   const router = new Router({
-    routes,
     scrollBehavior,
-    mode: 'history'
+    mode: 'history',
+    routes: [
+      {
+        path: '/:lang/',
+        component: {
+          render: c => c('router-view')
+        },
+        children: routes
+      },
+      {
+        path: '*',
+        redirect: to => {
+          const browserLang = window.navigator.language || navigator.language || navigator.userLanguage
+          const lang = store.getters.locales.includes(browserLang) ? browserLang : store.getters.defaultLocale
+          return {
+            name: 'home',
+            params: { lang }
+          }
+        }
+      }
+    ]
   })
 
-  // Register before guard.
-  router.beforeEach(async (to, from, next) => {
-    if (!store.getters.authCheck && store.getters.authToken) {
-      try {
-        await store.dispatch('fetchUser')
-      } catch (e) { }
-    }
-
-    setLayout(router, to)
-    next()
-  })
-
-  // Register after hook.
-  router.afterEach((to, from) => {
-    router.app.$nextTick(() => {
-      router.app.$loading.finish()
-    })
-  })
+  router.beforeEach(beforeEach)
+  router.afterEach(afterEach)
 
   return router
 }
 
 /**
- * Set the application layout from the matched page component.
+ * Global router guard.
  *
- * @param {Router} router
  * @param {Route} to
+ * @param {Route} from
+ * @param {Function} next
  */
-function setLayout (router, to) {
-  // Get the first matched component.
-  const [component] = router.getMatchedComponents({ ...to })
+async function beforeEach (to, from, next) {
+  // Get the matched components and resolve them.
+  const components = await resolveComponents(
+    router.getMatchedComponents({ ...to })
+  )
+
+  if (components.length === 0) {
+    return next()
+  }
+
+  let component = components.find(c => c.layout !== undefined)
+  component = component || components[0]
 
   if (component) {
     router.app.$nextTick(() => {
@@ -72,57 +91,105 @@ function setLayout (router, to) {
       router.app.setLayout(component.layout || '')
     })
   }
+
+  // Start the loading bar.
+  if (components[components.length - 1].loading !== false) {
+    router.app.$nextTick(() => router.app.$loading.start())
+  }
+
+  // Get the middleware for all the matched components.
+  const middleware = getMiddleware(components)
+
+  // Call each middleware.
+  callMiddleware(middleware, to, from, (...args) => {
+    next(...args)
+  })
 }
 
 /**
- * Redirect to login if guest.
+ * Global after hook.
  *
- * @param  {Array} routes
+ * @param {Route} to
+ * @param {Route} from
+ * @param {Function} next
+ */
+async function afterEach (to, from, next) {
+  await router.app.$nextTick()
+  router.app.$loading.finish()
+}
+
+/**
+ * Call each middleware.
+ *
+ * @param {Array} middleware
+ * @param {Route} to
+ * @param {Route} from
+ * @param {Function} next
+ */
+function callMiddleware (middleware, to, from, next) {
+  const stack = middleware.reverse()
+
+  const _next = (...args) => {
+    // Stop if "_next" was called with an argument or the stack is empty.
+    if (args.length > 0 || stack.length === 0) {
+      if (args.length > 0) {
+        router.app.$loading.finish()
+      }
+
+      return next(...args)
+    }
+
+    const middleware = stack.pop()
+
+    if (typeof middleware === 'function') {
+      middleware(to, from, _next)
+    } else if (routeMiddleware[middleware]) {
+      routeMiddleware[middleware](to, from, _next)
+    } else {
+      throw Error(`Undefined middleware [${middleware}]`)
+    }
+  }
+
+  _next()
+}
+
+/**
+ * Resolve async components.
+ *
+ * @param  {Array} components
  * @return {Array}
  */
-function authGuard (routes) {
-  return beforeEnter(routes, (to, from, next) => {
-    if (!store.getters.authCheck) {
-      next({
-        name: 'login',
-        query: { redirect: to.fullPath }
-      })
+async function resolveComponents (components) {
+  return Promise.all(components.map(async component => {
+    return typeof component === 'function' ? component() : component
+  }))
+}
+
+/**
+ * Merge the the global middleware with the components middleware.
+ *
+ * @param  {Array} components
+ * @return {Array}
+ */
+function getMiddleware (components) {
+  const middleware = [...globalMiddleware]
+
+  components.filter(c => c.middleware).forEach(component => {
+    if (Array.isArray(component.middleware)) {
+      middleware.push(...component.middleware)
     } else {
-      next()
+      middleware.push(component.middleware)
     }
   })
+
+  return middleware
 }
 
 /**
- * Redirect home if authenticated.
+ * Scroll Behavior
  *
- * @param  {Array} routes
- * @return {Array}
- */
-function guestGuard (routes) {
-  return beforeEnter(routes, (to, from, next) => {
-    if (store.getters.authCheck) {
-      next({ name: 'home' })
-    } else {
-      next()
-    }
-  })
-}
-
-/**
- * Apply beforeEnter guard to the routes.
+ * @link https://router.vuejs.org/en/advanced/scroll-behavior.html
  *
- * @param  {Array} routes
- * @param  {Function} beforeEnter
- * @return {Array}
- */
-function beforeEnter (routes, beforeEnter) {
-  return routes.map(route => {
-    return { ...route, beforeEnter }
-  })
-}
-
-/**
  * @param  {Route} to
  * @param  {Route} from
  * @param  {Object|undefined} savedPosition
@@ -133,16 +200,29 @@ function scrollBehavior (to, from, savedPosition) {
     return savedPosition
   }
 
-  const position = {}
-
   if (to.hash) {
-    position.selector = to.hash
+    return { selector: to.hash }
   }
 
-  if (to.matched.some(m => m.meta.scrollToTop)) {
-    position.x = 0
-    position.y = 0
+  const [component] = router.getMatchedComponents({ ...to }).slice(-1)
+
+  if (component && component.scrollToTop === false) {
+    return {}
   }
 
-  return position
+  return { x: 0, y: 0 }
+}
+
+/**
+ * @param  {Object} requireContext
+ * @return {Object}
+ */
+function resolveMiddleware (requireContext) {
+  return requireContext.keys()
+    .map(file =>
+      [file.replace(/(^.\/)|(\.js$)/g, ''), requireContext(file)]
+    )
+    .reduce((guards, [name, guard]) => (
+      { ...guards, [name]: guard.default }
+    ), {})
 }

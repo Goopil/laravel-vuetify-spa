@@ -1,6 +1,5 @@
-const path = require('path')
-const webpack = require('webpack')
 const mix = require('laravel-mix')
+const webpackAlias = require('./webpack.config')
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 
 mix
@@ -9,31 +8,29 @@ mix
   .sourceMaps()
   .disableNotifications()
   .copyDirectory('resources/assets/img', 'public/img')
-
-if (mix.inProduction()) {
-  mix.version()
-
-  mix.extract([
+  .version()
+  .extract([
     'vue',
-    'vform',
     'axios',
     'vuex',
     'vue-i18n',
-    'vue-meta',
-    'js-cookie',
     'vue-router',
+    'vuex-router-sync',
     'vuetify',
+    'vform',
+    'js-cookie',
     'vee-validate',
-    'vuex-router-sync'
+    'vee-validate/dist/locale/fr.js',
+    'vee-validate/dist/locale/en.js'
   ])
-}
 
 mix.webpackConfig({
+  ...webpackAlias,
   plugins: [
+    // new BundleAnalyzerPlugin()
   ],
-  resolve: {
-    alias: {
-      '~': path.join(__dirname, './resources/assets/js')
-    }
+  output: {
+    chunkFilename: 'js/[name].js',
+    publicPath: mix.config.hmr ? '//localhost:8080' : '/'
   }
 })

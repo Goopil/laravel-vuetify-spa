@@ -1,19 +1,20 @@
-# Laravel-Vue SPA Starter
+# Laravel-Vue i18n Fullstack SPA Starter
 
-> A Laravel-Vue SPA starter project template with Vuetify frontend. 
+> A Laravel-Vue FullStack SPA starter project template with Vuetify frontend. 
 
 Forked from https://github.com/cretueusebiu/laravel-vue-spa
 
 ## Features
 
-- Laravel 5.5 + Vue + Vue Router + Vuex
+- Laravel 5.6 + Vue + Vue Router + Vuex
 - Frontend built with [Vuetify](https://github.com/vuetifyjs/vuetify) UI framework
-- Pages with custom layouts 
+- Pages with custom layouts
 - Examples for login, register and password reset
 - Client-side form validation with [VeeValidate](https://github.com/baianat/vee-validate)
 - Integration with [vform](https://github.com/cretueusebiu/vform)
 - Authentication with [JWT](https://github.com/tymondesigns/jwt-auth)
 - Webpack with [laravel-mix](https://github.com/JeffreyWay/laravel-mix)
+- i18n with [vue-i18n](#) with localization stored in db with [spatie/laravel-translation-loader] (#)
 
 ## Installation
 
@@ -25,6 +26,7 @@ Forked from https://github.com/cretueusebiu/laravel-vue-spa
 - `php artisan jwt:secret`
 - Edit `.env` and set your database connection details
 - `php artisan migrate`
+- `php artisan db:seed`
 - `npm install` / `yarn`
 
 ## Usage

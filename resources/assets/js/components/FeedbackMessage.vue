@@ -6,13 +6,13 @@
         <v-divider></v-divider>
         <v-card-text>{{ responseMessage.text }}</v-card-text>
         <v-layout row justify-center>
-          <v-btn :color="responseMessage.type" flat="flat" @click.native="close">{{ $t('ok') }}</v-btn>
+          <v-btn :color="responseMessage.type" flat="flat" @click.native="close">{{ $t('common.ok') }}</v-btn>
         </v-layout>
       </v-card>
     </v-dialog>
     <v-snackbar v-else top v-model="responseMessage.show" :color="responseMessage.type">
       {{ responseMessage.text }}
-      <v-btn dark flat @click.native="close">{{ $t('close') }}</v-btn>
+      <v-btn dark flat @click.native="close">{{ $t('common.close') }}</v-btn>
     </v-snackbar>
   </v-layout>
 </template>

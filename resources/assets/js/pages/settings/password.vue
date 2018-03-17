@@ -2,14 +2,14 @@
   <v-card flat>
     <form @submit.prevent="update" @keydown="form.onKeydown($event)">
       <v-card-title primary-title>
-        <h5 class="subheading mb-0">{{ $t('your_password') }}</h5>
+        <h5 class="subheading mb-0">{{ $t('common.your_password') }}</h5>
       </v-card-title>
       <v-card-text>
 
         <!-- Password -->
         <password-input
           :form="form"
-          :hint="$t('password_length_hint')"
+          :hint="$t('common.password_length_hint')"
           :v-errors="errors"
           :value.sync="form.password"
           v-on:eye="eye = $event"
@@ -20,7 +20,7 @@
         <password-input
           :form="form"
           :hide="eye"
-          :label="$t('confirm_password')"
+          :label="$t('common.confirm_password')"
           :v-errors="errors"
           :value.sync="form.password_confirmation"
           data-vv-as="password"
@@ -33,7 +33,7 @@
 
       </v-card-text>
       <v-card-actions>
-        <submit-button :flat="true" :form="form" :label="$t('update')"></submit-button>
+        <submit-button :flat="true" :form="form" :label="$t('common.update')"></submit-button>
       </v-card-actions>
     </form>
   </v-card>
@@ -65,7 +65,7 @@ export default {
 
       this.$store.dispatch('responseMessage', {
         type: 'success',
-        text: this.$t('password_updated')
+        text: this.$t('common.password_updated')
       })
     }
   }

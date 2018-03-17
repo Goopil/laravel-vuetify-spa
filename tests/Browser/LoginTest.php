@@ -25,7 +25,7 @@ class LoginTest extends DuskTestCase
 
         $this->browse(function ($browser) use ($user) {
             $browser->visit(new Login)
-                ->submit($user->email, 'secret')
+                ->submit($user->email, 'secret12345')
                 ->assertPageIs(Home::class);
         });
     }
@@ -47,7 +47,7 @@ class LoginTest extends DuskTestCase
 
         $this->browse(function ($browser) use ($user) {
             $browser->visit(new Login)
-                ->submit($user->email, 'secret')
+                ->submit($user->email, 'secret12345')
                 ->on(new Home)
                 ->clickLogout()
                 ->assertPageIs(Login::class);

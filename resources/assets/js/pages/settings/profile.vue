@@ -2,14 +2,14 @@
   <v-card flat>
     <form @submit.prevent="update" @keydown="form.onKeydown($event)">
       <v-card-title primary-title>
-        <h5 class="subheading mb-0">{{ $t('your_info') }}</h5>
+        <h5 class="subheading mb-0">{{ $t('common.your_info') }}</h5>
       </v-card-title>
       <v-card-text>
 
         <!-- Name -->
         <text-input
           :form="form"
-          :label="$t('name')"
+          :label="$t('common.name')"
           :v-errors="errors"
           :value.sync="form.name"
           counter="30"
@@ -20,7 +20,7 @@
         <!-- Email -->
         <email-input
           :form="form"
-          :label="$t('email')"
+          :label="$t('common.email')"
           :v-errors="errors"
           :value.sync="form.email"
           name="email"
@@ -29,7 +29,7 @@
 
       </v-card-text>
       <v-card-actions>
-        <submit-button :flat="true" :form="form" :label="$t('update')"></submit-button>
+        <submit-button :flat="true" :form="form" :label="$t('common.update')"></submit-button>
       </v-card-actions>
     </form>
   </v-card>
@@ -48,9 +48,7 @@ export default {
     })
   }),
 
-  computed: mapGetters({
-    user: 'authUser'
-  }),
+  computed: mapGetters('auth', ['user']),
 
   created () {
     // Fill the form with user data.
@@ -67,12 +65,12 @@ export default {
 
       const { data } = await this.form.patch('/api/settings/profile')
 
-      await this.$store.dispatch('updateUser', { user: data })
+      await this.$store.dispatch('auth/updateUser', { user: data })
       this.$emit('busy', false)
 
       this.$store.dispatch('responseMessage', {
         type: 'success',
-        text: this.$t('info_updated')
+        text: this.$t('common.info_updated')
       })
     }
   }

@@ -3,10 +3,10 @@
     <v-content>
       <v-container fluid>
         <v-layout column align-center>
-          <div class="display-3 grey--text mt-5">{{ $t('page_not_found') }}</div>
+          <div class="display-3 grey--text mt-5">{{ $t('common.page_not_found') }}</div>
           <div class="body-2 my-3">
-            <router-link :to="{ name: 'welcome' }">
-              {{ $t('go_home') }}
+            <router-link :to="{ name: 'welcome', params: {lang: $store.getters.locale } }">
+              {{ $t('common.go_home') }}
             </router-link>
           </div>
         </v-layout>
@@ -16,8 +16,8 @@
 </template>
 
 <script>
-export default {
-  name: 'not-found',
-  layout: 'default'
-}
+  export default {
+    name: 'not-found',
+    layout: 'default'
+  }
 </script>

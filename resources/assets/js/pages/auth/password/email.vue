@@ -34,7 +34,8 @@ import Form from 'vform'
 
 export default {
   name: 'email-view',
-  
+  middleware: 'guest',
+
   metaInfo () {
     return { title: this.$t('reset_password') }
   },

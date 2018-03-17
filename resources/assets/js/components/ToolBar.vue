@@ -1,74 +1,93 @@
 <template>
-  <v-toolbar fixed app dark color="primary">
+
+  <v-toolbar fixed app clipped-left>
     <v-toolbar-side-icon @click.stop="toggleDrawer" v-if="authenticated"></v-toolbar-side-icon>
     <v-toolbar-title>
-      <router-link :to="{ name: 'welcome' }" class="white--text">
+      <router-link :to="{ name: 'welcome', params: {lang: $store.getters.locale} }">
         {{ appName }}
       </router-link>
     </v-toolbar-title>
     <v-spacer></v-spacer>
+    <v-menu :nudge-width="100">
+      <v-toolbar-title slot="activator">
+        <v-icon>language</v-icon>
+      </v-toolbar-title>
+      <v-list>
+        <v-list-tile v-for="locale in locales" :key="locale" :to="{name: $route.name, params: { lang: locale }}">
+          <v-list-tile-title v-text="locale"></v-list-tile-title>
+        </v-list-tile>
+      </v-list>
+    </v-menu>
 
     <!-- Authenticated -->
     <template v-if="authenticated">
       <progress-bar :show="busy"></progress-bar>
-      <v-btn flat :to="{ name: 'settings.profile' }">{{ user.name }}</v-btn>
-      <v-btn flat @click.prevent="logout">{{ $t('logout') }}</v-btn>
+      <v-menu :nudge-width="150" class="mr-3 ml-1">
+        <v-toolbar-title slot="activator">
+          <v-icon>more_vert</v-icon>
+        </v-toolbar-title>
+        <v-list>
+
+          <v-list-tile :to="{ name: 'settings.profile', params: {lang: $store.getters.locale} }">
+            <v-list-tile-title>{{$t('common.settings')}}</v-list-tile-title>
+          </v-list-tile>
+          <v-list-tile @click.prevent="logout">
+            <v-list-tile-title>{{ $t('common.logout') }}</v-list-tile-title>
+          </v-list-tile>
+
+        </v-list>
+      </v-menu>
     </template>
 
     <!-- Guest -->
     <template v-else>
-      <v-btn flat :to="{ name: 'login' }">{{ $t('login') }}</v-btn>
-      <v-btn flat :to="{ name: 'register' }">{{ $t('register') }}</v-btn>
+      <v-btn flat :to="{ name: 'login', params: {lang: $store.getters.locale}  }">{{ $t('common.login') }}</v-btn>
+      <v-btn flat :to="{ name: 'register', params: {lang: $store.getters.locale}  }">{{ $t('common.register') }}</v-btn>
     </template>
   </v-toolbar>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+  import { mapGetters } from 'vuex'
 
-export default {
-  props: {
-    drawer: {
-      type: Boolean,
-      required: true
-    }
-  },
-
-  data: () => ({
-    appName: window.config.appName,
-    busy: false
-  }),
-
-  computed: mapGetters({
-    user: 'authUser',
-    authenticated: 'authCheck'
-  }),
-
-  methods: {
-    toggleDrawer () {
-      this.$emit('toggleDrawer')
-    },
-    async logout () {
-      this.busy = true
-
-      if (this.drawer) {
-        this.toggleDrawer()
+  export default {
+    props: {
+      drawer: {
+        type: Boolean,
+        required: true
       }
+    },
 
-      // Log out the user.
-      await this.$store.dispatch('logout')
-      this.busy = false
+    data: () => ({
+      appName: window.config.appName,
+      busy: false
+    }),
 
-      // Redirect to login.
-      this.$router.push({ name: 'login' })
+    computed: {
+      ...mapGetters('auth', {
+        authenticated: 'check'
+      }),
+      ...mapGetters(['locales'])
+    },
+
+    methods: {
+      toggleDrawer () {
+        this.$emit('toggleDrawer')
+      },
+      async logout () {
+        this.busy = true
+
+        if (this.drawer) {
+          this.toggleDrawer()
+        }
+
+        // Log out the user.
+        await this.$store.dispatch('auth/logout')
+        this.busy = false
+
+        // Redirect to login.
+        this.$router.push({ name: 'login', params: { lang: this.$store.getters.locale } })
+      }
     }
   }
-}
 </script>
-
-<style lang="stylus" scoped>
-
-.toolbar__title .router-link-active
-  text-decoration: none
-
-</style>

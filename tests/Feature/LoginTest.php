@@ -22,7 +22,7 @@ class LoginTest extends TestCase
     {
         $this->postJson('/api/login', [
             'email' => $this->user->email,
-            'password' => 'secret',
+            'password' => 'secret12345',
         ])
         ->assertSuccessful()
         ->assertJsonStructure(['token', 'expires_in'])
@@ -43,7 +43,7 @@ class LoginTest extends TestCase
     {
         $token = $this->postJson('/api/login', [
             'email' => $this->user->email,
-            'password' => 'secret',
+            'password' => 'secret12345',
         ])->json()['token'];
 
         $this->postJson("/api/logout?token=$token")
