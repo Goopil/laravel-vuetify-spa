@@ -24,8 +24,12 @@ class Home extends Page
     public function clickLogout($browser)
     {
         $browser
+            ->element('@user-menu')
+            ->getLocationOnScreenOnceScrolledIntoView();
+
+        $browser
             ->click('@user-menu')
-            ->click('@logout')
+            ->press('@logout')
             ->pause(300);
     }
 }
