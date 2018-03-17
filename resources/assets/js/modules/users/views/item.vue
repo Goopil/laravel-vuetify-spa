@@ -1,13 +1,15 @@
 <template>
   <div>
-    <h1>users item {{$route.params.id}}</h1>
-    item {{user}}
+    {{user}}
   </div>
 </template>
 <script>
+  import {mapGetters} from 'vuex'
   export default {
-    props: {
-      user: {}
+    computed: {
+      ...mapGetters({
+        user: 'userByRoute'
+      })
     }
   }
 </script>
