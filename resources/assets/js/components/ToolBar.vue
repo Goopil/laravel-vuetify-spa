@@ -31,7 +31,7 @@
           <v-list-tile :to="{ name: 'settings.profile', params: {lang: $store.getters.locale} }">
             <v-list-tile-title>{{$t('common.settings')}}</v-list-tile-title>
           </v-list-tile>
-          <v-list-tile @click.prevent="logout">
+          <v-list-tile @click.prevent="logout"id="logout">
             <v-list-tile-title>{{ $t('common.logout') }}</v-list-tile-title>
           </v-list-tile>
 
