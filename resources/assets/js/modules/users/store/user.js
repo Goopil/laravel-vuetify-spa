@@ -30,7 +30,7 @@ export const actions = {
     let { users } = window.__state__
     if (users === undefined || users.length < 1 || force === true) {
       const { data } = await axios.get('/api/users')
-      users = data
+      users = data.users
     }
 
     await dispatch('setUsers', users)
@@ -64,6 +64,6 @@ export const actions = {
 }
 
 export const getters = {
-  users: state => state.all,
+  users: state => state.all || [],
   userByRoute: (state, getters, rootState) => state.all.find(u => u.id === parseInt(rootState.route.params.id))
 }
