@@ -27,7 +27,7 @@ class Login extends Page
     {
         $browser->type('email', $email)
                 ->type('password', $password)
-                ->click('div.card__text > button')
+                ->press('button[type=submit]')
                 ->pause(350);
     }
 }

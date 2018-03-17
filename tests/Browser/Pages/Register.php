@@ -29,7 +29,7 @@ class Register extends Page
         }
 
         $browser
-            ->click('div.card__text > button')
+            ->press('button[type=submit]')
             ->pause(500);
     }
 }
