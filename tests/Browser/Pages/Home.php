@@ -24,8 +24,6 @@ class Home extends Page
     public function clickLogout($browser)
     {
         $browser
-            ->press('@user-menu')
-            ->pause(100)
             ->click('@logout')
             ->pause(300);
     }
