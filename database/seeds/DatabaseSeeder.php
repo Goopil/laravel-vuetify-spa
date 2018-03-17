@@ -11,7 +11,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-         $this->call(LanguageLinesTableSeeder::class);
-         factory(\App\User::class)->create(['email' => 'zac@goopil.org']);
+        $this->call(LanguageLinesTableSeeder::class);
+        factory(\App\User::class)->create(['email' => 'zac@goopil.org']);
     }
 }

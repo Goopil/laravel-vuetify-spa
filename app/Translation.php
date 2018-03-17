@@ -5,8 +5,8 @@ namespace App;
 use Spatie\TranslationLoader\LanguageLine;
 
 /**
- * Class Translation
- * @package App
+ * Class Translation.
+ *
  * @mixin \Eloquent
  */
 class Translation extends LanguageLine
@@ -25,7 +25,6 @@ class Translation extends LanguageLine
         });
     }
 
-
     public static function getCacheKeyForCollection(string $locale): string
     {
         return "spatie.translation-loader.all.{$locale}";
@@ -36,7 +35,7 @@ class Translation extends LanguageLine
         return \Cache::rememberForever(static::getCacheKeyForCollection($locale), function () use ($locale) {
             return static::query()->get()
                     ->reduce(function ($lines, LanguageLine $languageLine) use ($locale) {
-                        array_set($lines, $languageLine->group . '.' . $languageLine->key, $languageLine->getTranslation($locale));
+                        array_set($lines, $languageLine->group.'.'.$languageLine->key, $languageLine->getTranslation($locale));
 
                         return $lines;
                     }) ?? [];
@@ -49,5 +48,4 @@ class Translation extends LanguageLine
             \Cache::forget(static::getCacheKeyForCollection($locale));
         }
     }
-
 }
