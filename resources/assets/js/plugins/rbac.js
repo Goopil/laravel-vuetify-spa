@@ -9,9 +9,9 @@ const separator = '|'
  * @returns {*}
  */
 const hasArray = data => {
-  return Array.isArray(data)
-    ? data
-    : (data.indexOf(separator) !== -1) ? data.split(separator) : [data]
+  return !Array.isArray(data)
+    ? (data.indexOf(separator) !== -1) ? data.split(separator) : [data]
+    : data
 }
 
 /**
@@ -35,7 +35,9 @@ const inArray = (a, b) => {
  */
 export const hasRoles = data => {
   const roles = hasArray(data)
-  return inArray(store.getters['auth/user'].roles, roles)
+  return store.getters['auth/user'] !== null
+    ? inArray(store.getters['auth/user'].roles, roles)
+    : false
 }
 
 /**
@@ -45,7 +47,9 @@ export const hasRoles = data => {
  */
 export const hasPermissions = data => {
   const permissions = hasArray(data)
-  return inArray(store.getters['auth/user'].permissions, permissions)
+  return store.getters['auth/user'] !== null
+    ? inArray(store.getters['auth/user'].permissions, permissions)
+    : false
 }
 
 /**
