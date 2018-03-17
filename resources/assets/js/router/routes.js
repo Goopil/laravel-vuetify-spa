@@ -1,10 +1,17 @@
 const modules = require.context('~/modules', true, /routes\.js$/)
 const mapModule = requireContext => {
   return requireContext.keys()
-    .reduce((routes, file) => ([
-      ...routes,
-      requireContext(file).default
-    ]), [])
+    .reduce((routes, file) => {
+      let moduleRoutes = requireContext(file).default
+      if (!Array.isArray(moduleRoutes)) {
+        moduleRoutes = [moduleRoutes]
+      }
+
+      return [
+        ...routes,
+        ...moduleRoutes
+      ]
+    }, [])
 }
 
 const routes = [
