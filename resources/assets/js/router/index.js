@@ -9,7 +9,9 @@ Vue.use(Router)
 // The middleware for every page of the application.
 const globalMiddleware = [
   'locale',
-  'check-auth'
+  'check-auth',
+  'roles',
+  'permissions'
 ]
 
 // Load middleware modules dynamically.
