@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Api\Settings;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class UpdateProfile extends Controller
 {

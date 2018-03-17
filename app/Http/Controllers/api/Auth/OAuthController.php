@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
-use App\Exceptions\EmailTakenException;
-use App\Http\Controllers\Controller;
-use App\OAuthProvider;
 use App\User;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\OAuthProvider;
+use App\Http\Controllers\Controller;
+use App\Exceptions\EmailTakenException;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class OAuthController extends Controller
 {
