@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use http\Env\Request;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -18,8 +19,11 @@ class Controller extends BaseController
 
     protected function formatState($data = [])
     {
-        return \Request::wantsJson() ?
-            $data :
-            view('index')->with(['state' => $data]);
+        $needState = in_array(debug_backtrace()[1]['function'], ['index', 'show']) && !\Request::is('api/*');
+
+        return $needState ?
+            view('index')->with(['state' => $data]) :
+            $data;
+
     }
 }
