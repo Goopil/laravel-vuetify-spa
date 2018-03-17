@@ -22,7 +22,7 @@
     <!-- Authenticated -->
     <template v-if="authenticated">
       <progress-bar :show="busy"></progress-bar>
-      <v-menu :nudge-width="150" class="mr-3 ml-1" id="user-menu">
+      <v-menu :nudge-width="150" class="mr-3 ml-1" dusk="user-menu">
         <v-toolbar-title slot="activator">
           <v-icon>more_vert</v-icon>
         </v-toolbar-title>
@@ -31,7 +31,7 @@
           <v-list-tile :to="{ name: 'settings.profile', params: {lang: $store.getters.locale} }">
             <v-list-tile-title>{{$t('common.settings')}}</v-list-tile-title>
           </v-list-tile>
-          <v-list-tile @click.prevent="logout"id="logout">
+          <v-list-tile @click.prevent="logout" dusk="logout">
             <v-list-tile-title>{{ $t('common.logout') }}</v-list-tile-title>
           </v-list-tile>
 
