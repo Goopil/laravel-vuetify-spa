@@ -18,8 +18,8 @@ axios.interceptors.response.use(response => response, error => {
   if (status >= 500) {
     store.dispatch('responseMessage', {
       type: 'error',
-      text: i18n.t('error_alert_text'),
-      title: i18n.t('error_alert_title'),
+      text: i18n.t('common.error_alert_text'),
+      title: i18n.t('common.error_alert_title'),
       modal: true
     })
   }
@@ -27,8 +27,8 @@ axios.interceptors.response.use(response => response, error => {
   if (status === 401 && store.getters['auth/check']) {
     store.dispatch('responseMessage', {
       type: 'warning',
-      text: i18n.t('token_expired_alert_text'),
-      title: i18n.t('token_expired_alert_title'),
+      text: i18n.t('common.token_expired_alert_text'),
+      title: i18n.t('common.token_expired_alert_title'),
       modal: true
     })
       .then(async () => {
