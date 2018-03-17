@@ -34,7 +34,8 @@ class LoginTest extends DuskTestCase
         $this->browse(function ($browser) {
             $browser->visit(new Login())
                 ->submit('test@test.app', 'secret12345')
-                ->assertSee('These credentials do not match our records.');
+                ->assertSee('These credentials do not match our records.')
+                ->assertPageIs(Login::class);
         });
     }
 
