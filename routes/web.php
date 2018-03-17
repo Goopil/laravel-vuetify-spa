@@ -11,6 +11,7 @@
 |
 */
 
-Route::resource('/admin/users', 'Admin\UserController')->only(['index', 'show']);
+Route::resource('/admin/users', 'UserController')->only(['index', 'show']);
+Route::get('/password/reset/{token}')->name('password.reset');
+
 Route::get('{path}', 'Controller@index')->where('path', '(.*)');
-Route::get('password/reset/{token}')->name('password.reset');
